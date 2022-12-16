@@ -17,7 +17,6 @@ export default async function handler(
         return;
     }
     const  message  = req.body;
-    console.log(message);
     const newMessage = { ...message, created_at: Date.now() }
     await redis.hset('messages', message.id, JSON.stringify(newMessage));
     serverPusher.trigger('messages', 'new-message', newMessage);

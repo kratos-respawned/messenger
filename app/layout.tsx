@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Header from "./Header";
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ export default function RootLayout({
     <html>
       <head />
 
-      <body className="bg-slate-800">
+      <body className="bg-white dark:bg-slate-800">
         <Header />
         {children}
       </body>

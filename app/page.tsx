@@ -3,16 +3,21 @@ import { message } from "../typings";
 import ChatInput from "./ChatInput";
 import Header from "./Header";
 import MessageList from "./MessageList";
+import Providers from "./Provider";
+import { unstable_getServerSession } from "next-auth/next";
 async function page() {
   const data = await fetch(`${process.env.VERCEL_URL}/api/getMessages`).then(
     (res) => res.json()
   );
+  const session = await unstable_getServerSession();
   const messages: message[] = data.messages;
   return (
-    <main>
-      <MessageList initialMessages={messages} />
-      <ChatInput />
-    </main>
+    <Providers session={session}>
+      <main>
+        <MessageList initialMessages={messages} />
+        <ChatInput session={session} />
+      </main>
+    </Providers>
   );
 }
 export default page;

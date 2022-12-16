@@ -5,23 +5,29 @@ import { v4 as uuid } from "uuid";
 import { message } from "../typings";
 import useSWR from "swr";
 import fetcher from "../utils/fetchMessages";
-function ChatInput() {
+import { unstable_getServerSession } from "next-auth/next";
+type Props = {
+  session: Awaited<ReturnType<typeof unstable_getServerSession>>;
+};
+////////////////////////////////
+function ChatInput({ session }: Props) {
   const [input, setInput] = useState("");
   const { data: messages, error, mutate } = useSWR("api/getMessages", fetcher);
-  // //////////////////////////////
+  ////////////////////////////////
   const addMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!input) return;
+    if (!session) return;
     const messageToSend = input;
     const id = uuid();
     const Message: message = {
       id,
       message: messageToSend,
       created_at: Date.now(),
-      username: "Elon Musk",
-      avatar: "https://avatars.dicebear.com/api/adventurer/mia.svg",
-      email: "elongmusk@gmail.com",
+      username: session?.user?.name!,
+      avatar: session?.user?.image!,
+      email: session?.user?.email!,
     };
     setInput("");
     const uploadMessagetoUpstash = async () => {
@@ -49,6 +55,7 @@ function ChatInput() {
       <input
         type="text"
         value={input}
+        disabled={!session}
         onChange={(e) => {
           setInput(e.target.value);
         }}
