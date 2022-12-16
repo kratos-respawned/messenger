@@ -11,6 +11,7 @@ export default async function RootLayout({
       <head />
 
       <body className="bg-white dark:bg-slate-800">
+        {/* @ts-ignore */}
         <Header />
         {children}
       </body>
