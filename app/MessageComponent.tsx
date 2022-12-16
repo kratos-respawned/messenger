@@ -31,7 +31,7 @@ function MessageComponent({ message }: Props) {
         </p>
         <div className="flex items-end">
           <div
-            className={`px-3 py-2 rounded-lg w-fit text-white bg-red-400 ${
+            className={`px-3 py-2 rounded-lg w-fit text-white  ${
               isUser ? "bg-[#7cb342]  ml-auto order-2" : " bg-red-400"
             }`}
           >
@@ -42,7 +42,6 @@ function MessageComponent({ message }: Props) {
               isUser && "text-right"
             }`}
           >
-            {/* <TimeAgo date="Feb 1, 1966" formatter={formatter} /> */}
             <TimeAgo date={new Date(message.created_at)} />
           </p>
         </div>

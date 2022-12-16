@@ -1,5 +1,4 @@
 "use client";
-
 import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { message } from "../typings";
@@ -25,8 +24,11 @@ function ChatInput({ session }: Props) {
       id,
       message: messageToSend,
       created_at: Date.now(),
+      // @ts-ignore
       username: session?.user?.name!,
+      // @ts-ignore
       avatar: session?.user?.image!,
+      // @ts-ignore
       email: session?.user?.email!,
     };
     setInput("");
